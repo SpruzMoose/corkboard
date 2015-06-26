@@ -1,0 +1,15 @@
+{% load staticfiles %}
+<div class="ui segment">
+	<div class="ui header">
+		<h3>{{board.name}}</h1>
+	</div>
+	<div class="ui padded grid">
+		{% for pin_to_board in pin_to_boards %}
+		{% with pin=pin_to_board.pin %}
+		<div class="four wide column">
+			{% include "homes/pin_element.html"%}
+		</div>
+		{% endwith %}
+		{% endfor %}
+	</div>
+</div>

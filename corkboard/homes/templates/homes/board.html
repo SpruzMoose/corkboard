@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% block title %}Board: {{board.name}}{% endblock %}
+{% block body %}
+{% load staticfiles %}
+<div class="ui page padded grid">
+	<div class="centered column">
+		{% include "homes/board_element.html" %}
+	</div>
+</div>
+{% endblock %}

@@ -1,0 +1,53 @@
+{% load staticfiles %}
+<div class="ui special cards">
+	<div class="card segment">
+		<div class="image">
+			<img src="{% static pin.image %}"/>
+		</div>
+		<div class="content">
+			<div class="description">
+				{{pin.caption}}
+			</div>
+		</div>
+		<div class="extra content">
+			<div class="meta">
+				<span class="meta">
+					{{pin.category.name}}
+				</span>
+			</div>
+		</div>
+		<div class="extra content">
+			{% if available_boards %}
+			<form action="{% url 'pintoboard' pin.id %}" method="post">
+			{% csrf_token %}
+			<div class="ui fluid basic  button tiny green dropdown">
+				<div class="text fluid">
+					<i class="pin icon"></i>
+					Pin to Board...
+				</div>
+				<div class="menu">
+						{% for board in available_boards %}
+						<div class="item">
+							<button type="submit" class="ui fluid green button" name="board_id" value="{{board.id}}">{{board.name}}</button>
+						</div>
+						{% endfor %}
+				</div>
+			</div>
+			</form>
+			{% elif current_board %}
+			<form action="{% url 'unpin' pin.id %}" method="post">
+			{% csrf_token %}
+			<button type="submit" class="ui fluid basic tiny red button" name="board_id" value="{{current_board.id}}">
+				<i class="ban icon"></i>Unpin from {{current_board.name}}
+			</button>
+			</form>
+			{% else %}
+			{% endif %}
+		</div>
+	</div>
+</div>
+<script>
+$('.ui.dropdown')
+  .dropdown()
+  ;
+</script>

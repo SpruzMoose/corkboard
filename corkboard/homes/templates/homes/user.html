@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block title %}Corkboard - {{user.username}}{% endblock %}
+{% block body %}
+{% load staticfiles %}
+<div class="ui page padded grid">
+	<div class="ui row">
+		<div class="four wide column">
+			<h1>{{ user.username }}</h1>
+		</div>
+		<div class="eight wide column ">
+		</div>
+		<div class="four wide column">
+			<a class="fluid ui red button" href="/logout">Logout</a>
+		</div>
+	</div>
+	<div class="ui horizontal divider">
+		<em>Boards for {{ user.first_name }} {{ user.last_name }}</em>
+	</div>
+	{% for board, pin_to_boards in board_dict.items %}
+	{% with current_board=board %}
+	<div class="ui row">
+		<div class="ui padded grid">
+			<div class="sixteen wide column">
+				{% include "homes/board_element.html"%}
+			</div>
+		</div>
+	</div>
+	{% endwith %}
+	{% endfor %}
+	<div class="ui horizontal divider">
+		<em>Unpinned Pins</em>
+	</div>
+	<div class="ui row">
+		<div class="ui padded grid">
+			{% for pin in loose_pins %}
+			{% with available_boards=boards %}
+			<div class="four wide column">
+				{% include "homes/pin_element.html"%}
+			</div>
+			{% endwith %}
+			{% endfor %}
+		</div>
+	</div>
+</div>
+{% endblock %}
